@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyCharMC - Minecraft Launcher</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: #0b100d;
+    color: white;
+}
+
+nav {
+    height: 80px;
+    padding: 0 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #111a13;
+    border-bottom: 1px solid #263c2b;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.brand img {
+    width: 43px;
+    height: 43px;
+    object-fit: contain;
+}
+
+.brand span { color: #61d76b; }
+
+nav a {
+    color: #b9c5ba;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 14px;
+    transition: .2s;
+}
+
+nav a:hover { color: #65e474; }
+
+.hero {
+    min-height: 650px;
+    padding: 100px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    background:
+    radial-gradient(ellipse at center, #19351c 0%, #0b100d 75%);
+}
+
+.hero-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 25px #4cce5c55);
+}
+
+.tag {
+    color: #78e783;
+    background: #18351e;
+    border: 1px solid #356d3e;
+    border-radius: 30px;
+    padding: 9px 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: clamp(48px, 8vw, 85px);
+    font-weight: 900;
+    letter-spacing: -3px;
+}
+
+.hero h1 span { color: #62db70; }
+
+.hero p {
+    max-width: 570px;
+    color: #aebbb0;
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 20px 0 35px;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    padding: 16px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: .25s;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #59ce66;
+    color: #071109;
+    box-shadow: 0 5px 25px #59ce6640;
+}
+
+.btn-primary:hover {
+    background: #7df08a;
+    transform: translateY(-4px);
+}
+
+.btn-secondary {
+    background: #19251b;
+    border: 1px solid #39533d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    border-color: #69e479;
+    transform: translateY(-4px);
+}
+
+.small-info {
+    color: #758477;
+    font-size: 12px;
+    margin-top: 22px;
+}
+
+section { padding: 85px 9%; }
+
+.section-title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.section-desc {
+    text-align: center;
+    color: #8e9d90;
+    margin-bottom: 45px;
+}
+
+.versions {
+    background: #101810;
+}
+
+.version-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.version {
+    background: #18231a;
+    border: 1px solid #2d4130;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    transition: .2s;
+}
+
+.version:hover {
+    border-color: #62db70;
+    transform: translateY(-5px);
+}
+
+.version .number {
+    color: #68e477;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.version p {
+    color: #89988b;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.feature {
+    background: #151f17;
+    border: 1px solid #293b2c;
+    padding: 30px;
+    border-radius: 12px;
+    transition: .2s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    border-color: #61d76b;
+}
+
+.feature .icon {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.feature h3 { margin-bottom: 12px; }
+
+.feature p {
+    color: #91a092;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.download-section {
+    background: #15251a;
+    text-align: center;
+}
+
+.download-section h2 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.download-section p {
+    color: #9aaa9c;
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+footer {
+    background: #080d09;
+    border-top: 1px solid #263529;
+    padding: 30px 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #778579;
+    font-size: 13px;
+}
+
+footer a {
+    color: #69dc75;
+    text-decoration: none;
+}
+
+@media(max-width:600px) {
+    nav { padding: 0 5%; }
+    nav a { margin-left: 10px; font-size: 12px; }
+    section { padding: 65px 6%; }
+    footer { justify-content: center; text-align: center; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="brand">
+        <img src="logo.png" alt="PyCharMC Logo">
+        <div>PyChar<span>MC</span></div>
+    </div>
+
+    <div>
+        <a href="#versions">Versions</a>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="https://gitlab.com/winvis300-max/pycharmc"
+           target="_blank">GitLab ↗</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <img src="logo.png" class="hero-logo" alt="PyCharMC">
+
+    <div class="tag">MINECRAFT LAUNCHER</div>
+
+    <h1>PyChar<span>MC</span></h1>
+
+    <p>
+        Your Minecraft journey starts here.
+        Choose your favorite version, launch the game
+        and enjoy a simple and smooth experience with PyCharMC.
+    </p>
+
+    <div class="buttons">
+        <a href="https://github.com/winvis300-max/PyCharMC/releases/download/blah/PyCharMcAlpha0.1Setup.exe"
+           class="btn btn-primary" target="_blank">
+            ↓ Download PyCharMC
+        </a>
+
+        <a href="https://gitlab.com/winvis300-max/pycharmc"
+           class="btn btn-secondary" target="_blank">
+            View Source Code ↗
+        </a>
+    </div>
+
+    <div class="small-info">
+        Minecraft Launcher · 8 Minecraft Versions
+    </div>
+
+</header>
+
+<!-- VERSIONS -->
+
+<section class="versions" id="versions">
+
+    <h2 class="section-title">Supported Versions</h2>
+
+    <p class="section-desc">
+        Choose from 8 different Minecraft versions.
+    </p>
+
+    <div class="version-grid">
+
+        <div class="version">
+            <div class="number">26.3</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">26.2</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">1.21.11</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">1.12</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">1.11</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">1.8.8</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">1.7.3</div>
+            <p>Minecraft Version</p>
+        </div>
+
+        <div class="version">
+            <div class="number">1.5.2</div>
+            <p>Minecraft Version</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- FEATURES -->
+
+<section id="features">
+
+    <h2 class="section-title">Why PyCharMC?</h2>
+
+    <p class="section-desc">
+        Everything you need for your Minecraft experience.
+    </p>
+
+    <div class="features-grid">
+
+        <div class="feature">
+            <div class="icon">⚡</div>
+            <h3>Fast & Lightweight</h3>
+            <p>
+                A simple launcher experience without unnecessary complexity.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">🎮</div>
+            <h3>Multiple Versions</h3>
+            <p>
+                Choose between 8 different Minecraft versions.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">🌿</div>
+            <h3>Easy to Use</h3>
+            <p>
+                A clean and user-friendly interface designed for players.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">💻</div>
+            <h3>Open Source</h3>
+            <p>
+                Explore the PyCharMC source code on GitLab.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- DOWNLOAD -->
+
+<section class="download-section" id="download">
+
+    <h2>Ready to Play?</h2>
+
+    <p>
+        Download PyCharMC and start your Minecraft adventure today!
+        <br>
+        Get the latest available release from GitLab.
+    </p>
+
+    <a href="https://gitlab.com/winvis300-max/pycharmc/-/releases"
+       class="btn btn-primary" target="_blank">
+        ↓ Download Latest Release
+    </a>
+
+</section>
+
+<footer>
+    <div>© 2026 PyCharMC. All rights reserved.</div>
+
+    <div>
+        <a href="https://gitlab.com/winvis300-max/pycharmc"
+           target="_blank">GitLab Repository ↗</a>
+    </div>
+</footer>
+
+</body>
+</html>
